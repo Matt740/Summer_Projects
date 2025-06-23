@@ -1,5 +1,40 @@
 #!/bin/bash
 
+echo "? Updating system packages..."
+sudo apt update && sudo apt upgrade -y
+
+echo "? Installing system dependencies..."
+sudo apt install -y \
+    python3 \
+    python3-venv \
+    python3-pip \
+    python3-opencv \
+    python3-picamera2 \
+    libatlas-base-dev
+
+# Create the virtual environment if it doesn't already exist
+if [ ! -d "myenv" ]; then
+    echo "? Creating Python virtual environment..."
+    python3 -m venv myenv
+fi
+
+# Activate the virtual environment
+echo "? Activating virtual environment..."
+source myenv/bin/activate
+
+echo "? Upgrading pip..."
+python3 -m ensurepip --upgrade
+pip install --upgrade pip
+
+echo "? Installing Python packages (excluding opencv-python and picamera2)..."
+# Filter out incompatible packages before installing
+grep -v -E '^(opencv-python|picamera2)' requirements.txt > filtered_requirements.txt
+pip install -r filtered_requirements.txt
+rm filtered_requirements.txt
+
+echo "? Setup complete."
+#!/bin/bash
+
 # Function to check if a package is installed
 check_and_install() {
   PACKAGE=$1
@@ -16,6 +51,7 @@ echo "Updating package list..."
 sudo apt update
 
 # Check and install system dependencies
+check_and_install python3
 check_and_install python3-venv
 check_and_install libcap-dev
 check_and_install libcamera-apps
