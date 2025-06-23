@@ -1,85 +1,30 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
 
 echo "? Updating system packages..."
-sudo apt update && sudo apt upgrade -y
+sudo apt update && sudo apt full-upgrade -y
 
 echo "? Installing system dependencies..."
 sudo apt install -y \
-    python3 \
-    python3-venv \
-    python3-pip \
-    python3-opencv \
-    python3-picamera2 \
-    libatlas-base-dev
+  python3 python3-venv python3-pip \
+  python3-opencv python3-picamera2 \
+  libatlas-base-dev libcap-dev \
+  libcamera-apps libcamera-dev libcamera-tools \
+  python3-libcamera
 
-# Create the virtual environment if it doesn't already exist
-if [ ! -d "myenv" ]; then
-    echo "? Creating Python virtual environment..."
-    python3 -m venv myenv
+# Create virtual environment if it doesn't exist
+if [[ ! -d RunClub ]]; then
+  echo "? Creating Python virtual environment 'RunClub'..."
+  python3 -m venv RunClub --system-site-packages
 fi
 
 # Activate the virtual environment
-echo "? Activating virtual environment..."
-source myenv/bin/activate
-
-echo "? Upgrading pip..."
-python3 -m ensurepip --upgrade
+echo "?? Activating virtual environment and upgrading pip..."
+source RunClub/bin/activate
 pip install --upgrade pip
 
-echo "? Installing Python packages (excluding opencv-python and picamera2)..."
-# Filter out incompatible packages before installing
-grep -v -E '^(opencv-python|picamera2)' requirements.txt > filtered_requirements.txt
-pip install -r filtered_requirements.txt
-rm filtered_requirements.txt
+# No packages to install since requirements.txt is empty
+#echo "? No Python packages to install (requirements.txt is empty)."
 
-echo "? Setup complete."
-#!/bin/bash
-
-# Function to check if a package is installed
-check_and_install() {
-  PACKAGE=$1
-  if dpkg -s "$PACKAGE" &> /dev/null; then
-    echo "$PACKAGE is already installed."
-  else
-    echo "Installing $PACKAGE..."
-    sudo apt install -y "$PACKAGE"
-  fi
-}
-
-# Update package index
-echo "Updating package list..."
-sudo apt update
-
-# Check and install system dependencies
-check_and_install python3
-check_and_install python3-venv
-check_and_install libcap-dev
-check_and_install libcamera-apps
-check_and_install libcamera-dev
-check_and_install libcamera-tools
-check_and_install python3-libcamera  # if available
-check_and_install libcamera
-
-# Create virtual environment if it doesn't exist
-if [ -d "myenv" ]; then
-  echo "Virtual environment 'myenv' already exists."
-else
-  echo "Creating virtual environment 'myenv'..."
-  python3 -m venv myenv
-fi
-
-# Print activation instructions
-echo "To activate the virtual environment, run:"
-echo "  source myenv/bin/activate"
-
-# Install Python dependencies
-echo "Installing/upgrading pip and Python packages from requirements.txt..."
-myenv/bin/pip install --upgrade pip
-
-if [ -f "requirements.txt" ]; then
-  myenv/bin/pip install -r requirements.txt
-else
-  echo "No requirements.txt found — skipping package install."
-fi
-
-echo "✅ Setup complete."
+echo "? Setup complete. Run 'source RunClub/bin/activate' to activate the environment."
