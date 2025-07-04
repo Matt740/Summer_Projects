@@ -45,57 +45,57 @@ class StepperMotor:
     def manual_enable(self, on):
         self.enable(on)
 
-# def main():
-#     chip = gpiod.Chip(CHIP_NAME)
-#     motors = {
-#         1: StepperMotor(chip, 4, 3, 2),
-#         2: StepperMotor(chip, 22, 27, 17),
-#         3: StepperMotor(chip, 11, 9, 10)
-#     }
+def main():
+    chip = gpiod.Chip(CHIP_NAME)
+    motors = {
+        1: StepperMotor(chip, 4, 3, 2),
+        2: StepperMotor(chip, 22, 27, 17),
+        3: StepperMotor(chip, 11, 9, 10)
+    }
 
-#     print("Commands:")
-#     print("- 'motor <id>: <degrees>' to rotate")
-#     print("- 'enable <id>' to enable")
-#     print("- 'disable <id>' to disable")
-#     print("- 'exit' to quit")
+    print("Commands:")
+    print("- 'motor <id>: <degrees>' to rotate")
+    print("- 'enable <id>' to enable")
+    print("- 'disable <id>' to disable")
+    print("- 'exit' to quit")
 
-#     try:
-#         while True:
-#             cmd = input("> ").strip().lower()
-#             if cmd == "exit":
-#                 break
-#             elif cmd.startswith("motor"):
-#                 try:
-#                     parts = cmd.split(":")
-#                     motor_id = int(parts[0].split()[1])
-#                     degrees = float(parts[1])
-#                     if motor_id in motors:
-#                         print(f"Rotating motor {motor_id} by {degrees}°")
-#                         motors[motor_id].rotate_degrees(degrees)
-#                     else:
-#                         print("Invalid motor number")
-#                 except Exception:
-#                     print("Invalid input format. Use 'motor <id>: <deg>'")
-#             elif cmd.startswith("enable"):
-#                 try:
-#                     motor_id = int(cmd.split()[1])
-#                     if motor_id in motors:
-#                         motors[motor_id].manual_enable(True)
-#                     else:
-#                         print("Invalid motor number")
-#                 except:
-#                     print("Invalid input. Use 'enable <id>'")
-#             elif cmd.startswith("disable"):
-#                 try:
-#                     motor_id = int(cmd.split()[1])
-#                     if motor_id in motors:
-#                         motors[motor_id].manual_enable(False)
-#                     else:
-#                         print("Invalid motor number")
-#                 except:
-#                     print("Invalid input. Use 'disable <id>'")
-#             else:
-#                 print("Invalid command.")
-#     finally:
-#         chip.close()
+    try:
+        while True:
+            cmd = input("> ").strip().lower()
+            if cmd == "exit":
+                break
+            elif cmd.startswith("motor"):
+                try:
+                    parts = cmd.split(":")
+                    motor_id = int(parts[0].split()[1])
+                    degrees = float(parts[1])
+                    if motor_id in motors:
+                        print(f"Rotating motor {motor_id} by {degrees}°")
+                        motors[motor_id].rotate_degrees(degrees)
+                    else:
+                        print("Invalid motor number")
+                except Exception:
+                    print("Invalid input format. Use 'motor <id>: <deg>'")
+            elif cmd.startswith("enable"):
+                try:
+                    motor_id = int(cmd.split()[1])
+                    if motor_id in motors:
+                        motors[motor_id].manual_enable(True)
+                    else:
+                        print("Invalid motor number")
+                except:
+                    print("Invalid input. Use 'enable <id>'")
+            elif cmd.startswith("disable"):
+                try:
+                    motor_id = int(cmd.split()[1])
+                    if motor_id in motors:
+                        motors[motor_id].manual_enable(False)
+                    else:
+                        print("Invalid motor number")
+                except:
+                    print("Invalid input. Use 'disable <id>'")
+            else:
+                print("Invalid command.")
+    finally:
+        chip.close()
 
