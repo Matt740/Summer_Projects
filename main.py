@@ -28,6 +28,7 @@ def main():
         stepper2.rotate_degrees(-10)
         stepper3.rotate_degrees(-10)
         time.sleep(2) 
+    
 
 
 
