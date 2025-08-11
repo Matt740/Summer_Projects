@@ -3,7 +3,7 @@ import gpiod
 import time
 
 # Codebase# Packages
-from Stepper import StepperMotor, CHIP_NAME
+from CodeBase.Stepper import StepperMotor, CHIP_NAME
 #import BallTracker
 
 
