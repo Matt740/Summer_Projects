@@ -91,7 +91,7 @@ class BallTrackerLite:
         x, y, r = max(circles, key=lambda c: c[2])  # pick the largest circle
 
         u = (x - self.cx) / (self.W / 2.0)  # normalized offsets for PID
-        v = (y - self.cy) / (self.H / 2.0)
+        v = (y - self.cy) / (self.W / 2.0) # normalizing to the width as well to maintain spatial consistency
 
         return {
             "x": int(x),
@@ -102,17 +102,17 @@ class BallTrackerLite:
             "timestamp": time.time()
         }
 
-# -------- Minimal usage --------
-if __name__ == "__main__":
-    tracker = BallTrackerLite()
-    tracker.start()
-    try:
-        while True:
-            pos = tracker.read()
-            if pos:
-                # Feed pos["u"], pos["v"] into your PID as error signals
-                print(pos)
-    except KeyboardInterrupt:
-        pass
-    finally:
-        tracker.close()
+# # -------- Minimal usage --------
+# if __name__ == "__main__":
+#     tracker = BallTrackerLite()
+#     tracker.start()
+#     try:
+#         while True:
+#             pos = tracker.read()
+#             if pos:
+#                 # Feed pos["u"], pos["v"] into your PID as error signals
+#                 print(pos)
+#     except KeyboardInterrupt:
+#         pass
+#     finally:
+#         tracker.close()
