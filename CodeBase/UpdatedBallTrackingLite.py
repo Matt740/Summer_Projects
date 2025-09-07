@@ -7,8 +7,8 @@ class BallTrackerLite:
     def __init__(
         self,
         resolution=(640, 480),
-        hsv_low=(10, 0, 160),     # defaults tuned for orange-ish
-        hsv_high=(35, 255, 255),
+        hsv_low=(9, 60, 160),     # defaults tuned for orange-ish
+        hsv_high=(38, 255, 255),
         hough_dp=1.2,
         hough_minDist=50,
         hough_param1=100,
