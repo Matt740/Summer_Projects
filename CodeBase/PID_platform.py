@@ -155,13 +155,11 @@ class PlatformPID:
         roll_cmd  = self.roll_pid.update(e_u, meas=u_meas, dt=dt)
         pitch_cmd = self.pitch_pid.update(e_v, meas=v_meas, dt=dt)
 
-        print("Roll cmd:", roll_cmd, "Pitch cmd :", pitch_cmd)
-
         # Sign corrections to match your platform geometry & motor wiring
         roll_out  = self.sign_roll  * roll_cmd
         pitch_out = self.sign_pitch * pitch_cmd
 
-        return roll_out, pitch_out
+        return roll_out, pitch_out # Return the output values in radians
 
 
 # ---------- Example wiring with your BallTrackerLite ----------
