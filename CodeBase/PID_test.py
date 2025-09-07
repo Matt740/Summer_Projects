@@ -6,8 +6,8 @@ import numpy as np
 
 if __name__ == "__main__":
 
-    roll_gains  = PIDGains(kp=6.0, ki=0.0, kd=0.0)
-    pitch_gains = PIDGains(kp=6.0, ki=0.0, kd=0.0)
+    roll_gains  = PIDGains(kp=3.0, ki=0.0, kd=0.0)
+    pitch_gains = PIDGains(kp=3.0, ki=0.0, kd=0.0)
 
     ctrl = PlatformPID(roll_gains, pitch_gains, max_angle_deg=10.0,
                        sign_roll=-1.0, sign_pitch=-1.0)
