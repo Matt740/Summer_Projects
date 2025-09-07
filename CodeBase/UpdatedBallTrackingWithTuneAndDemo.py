@@ -166,6 +166,7 @@ class BallTracker:
 if __name__ == "__main__":
     tracker = BallTracker(show_tuner=True)
     tracker.start()
+    #tracker.run_demo()
     try:
         while True:
             res = tracker.read()  # <-- returns dict or None

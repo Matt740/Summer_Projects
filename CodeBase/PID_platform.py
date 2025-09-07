@@ -76,7 +76,6 @@ class PID:  # PID class, one for each axis of rotation
         out = max(self.out_min, min(self.out_max, out))
         return out
 
-
 class PlatformPID:
     """
     Maps ball position -> platform angles.
