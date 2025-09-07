@@ -1,5 +1,6 @@
 import time
 from dataclasses import dataclass
+import numpy as np
 
 @dataclass
 class PIDGains: # Something that stores the PID gains
@@ -73,7 +74,10 @@ class PID:  # PID class, one for each axis of rotation
 
         out = p + self._i + self._d_filt
         # Output clamp, contrains limits to max and min angles
-        out = max(self.out_min, min(self.out_max, out))
+
+                # Clip to safe ranges
+        out = np.clip(out, self.out_min, self.out_max)
+
         return out
 
 class PlatformPID:

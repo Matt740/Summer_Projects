@@ -63,9 +63,6 @@ class ThreeRRSRobot:
             active_thetas : list of motor angles (radians)
             passive_phis  : list of passive joint (elbow) angles (radians)
         """
-        h     = np.clip(h, self.h_min, self.h_max)
-        roll  = np.clip(roll, -self.roll_max, self.roll_max)
-        pitch = np.clip(pitch, -self.pitch_max, self.pitch_max)
 
         # ---- Safety checks ----
         if not (self.h_min <= h <= self.h_max):
