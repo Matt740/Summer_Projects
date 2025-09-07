@@ -15,8 +15,8 @@ if __name__ == "__main__":
     h = 213
     robot = ThreeRRSRobot(d, e, f, g,
                       h_min=100, h_max=400,
-                      roll_max=np.deg2rad(15),
-                      pitch_max=np.deg2rad(15),
+                      roll_max_deg = 15,
+                      pitch_max_deg= 15,
                       motor_limits=[(0.0, np.deg2rad(143))] * 3)
     tracker = BallTrackerLite()
     tracker.start()
@@ -26,7 +26,7 @@ if __name__ == "__main__":
         if data is None:
              continue
         u, v, t = data["u"], data["v"], data["timestamp"]
-        roll_cmd, pitch_cmd = ctrl.update(u, v, t)
+        roll_cmd, pitch_cmd = ctrl.update(u, v, t) # in radians
         motor_angles, passive_angles = robot.inverse_kinematics(h,
                                                                 roll=roll_cmd,
                                                                 pitch=pitch_cmd)
