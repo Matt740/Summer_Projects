@@ -78,7 +78,7 @@ class PID:  # PID class, one for each axis of rotation
                 # Clip to safe ranges
         out = np.clip(out, self.out_min, self.out_max)
 
-        return out
+        return out # Return the output value in radians
 
 class PlatformPID:
     """
@@ -94,14 +94,20 @@ class PlatformPID:
     def __init__(self,
                  gains_roll: PIDGains,
                  gains_pitch: PIDGains,
-                 max_angle_deg: float = 10.0,
+                 max_angle_deg: float = 10.0, # Internally use radians, externally degrees
                  sign_roll: float = -1.0,   # flip to match your platform
                  sign_pitch: float = -1.0,  # flip to match your platform
                  d_alpha: float = 0.2):
-        self.roll_pid = PID(gains_roll, out_min=-max_angle_deg, out_max=+max_angle_deg,
-                            i_min=-max_angle_deg, i_max=+max_angle_deg, d_alpha=d_alpha)
-        self.pitch_pid = PID(gains_pitch, out_min=-max_angle_deg, out_max=+max_angle_deg,
-                             i_min=-max_angle_deg, i_max=+max_angle_deg, d_alpha=d_alpha)
+        
+        # convert to radians
+        max_angle = np.deg2rad(max_angle_deg) 
+
+        # one PID for each axis
+
+        self.roll_pid = PID(gains_roll, out_min=-max_angle, out_max=+max_angle,
+                            i_min=-max_angle, i_max=+max_angle, d_alpha=d_alpha)
+        self.pitch_pid = PID(gains_pitch, out_min=-max_angle, out_max=+max_angle,
+                             i_min=-max_angle, i_max=+max_angle, d_alpha=d_alpha)
 
         # setpoints (target center)
         self.u_sp = 0.0
@@ -146,8 +152,10 @@ class PlatformPID:
         e_v = self.v_sp - v_meas
 
         # Roll responds to u (x-axis), Pitch responds to v (y-axis)
-        roll_cmd  = self.roll_pid.update(e_u, meas=u_meas, dt=dt)   # deg
-        pitch_cmd = self.pitch_pid.update(e_v, meas=v_meas, dt=dt)  # deg
+        roll_cmd  = self.roll_pid.update(e_u, meas=u_meas, dt=dt)
+        pitch_cmd = self.pitch_pid.update(e_v, meas=v_meas, dt=dt)
+
+        print("Roll cmd:", roll_cmd, "Pitch cmd :", pitch_cmd)
 
         # Sign corrections to match your platform geometry & motor wiring
         roll_out  = self.sign_roll  * roll_cmd
