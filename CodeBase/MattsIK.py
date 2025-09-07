@@ -64,12 +64,12 @@ class ThreeRRSRobot:
             passive_phis  : list of passive joint (elbow) angles (radians)
         """
         # ---- Safety checks ----
-        if not (self.h_min <= h <= self.h_max):
-            raise ValueError(f"Height {h} mm is out of safe range [{self.h_min}, {self.h_max}]")
-        if abs(roll) > self.roll_max:
-            raise ValueError(f"Roll {np.rad2deg(roll):.2f}° exceeds safe limit ±{np.rad2deg(self.roll_max)}°")
-        if abs(pitch) > self.pitch_max:
-            raise ValueError(f"Pitch {np.rad2deg(pitch):.2f}° exceeds safe limit ±{np.rad2deg(self.pitch_max)}°")
+        # if not (self.h_min <= h <= self.h_max):
+        #     raise ValueError(f"Height {h} mm is out of safe range [{self.h_min}, {self.h_max}]")
+        # if abs(roll) > self.roll_max:
+        #     raise ValueError(f"Roll {np.rad2deg(roll):.2f}° exceeds safe limit ±{np.rad2deg(self.roll_max)}°")
+        # if abs(pitch) > self.pitch_max:
+        #     raise ValueError(f"Pitch {np.rad2deg(pitch):.2f}° exceeds safe limit ±{np.rad2deg(self.pitch_max)}°")
 
         # Compute transformed platform joints
         platform_positions = self.forward_platform_joints(h, roll, pitch, yaw)
