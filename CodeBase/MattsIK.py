@@ -3,8 +3,8 @@ import numpy as np
 class ThreeRRSRobot:
     def __init__(self, d, e, f, g,
                  h_min=100, h_max=400,
-                 roll_max=np.deg2rad(20),
-                 pitch_max=np.deg2rad(20),
+                 roll_max_deg=20,
+                 pitch_max_deg=20,
                  motor_limits = [(0.0, np.deg2rad(143))] * 3):
         """
         d : float
@@ -23,7 +23,7 @@ class ThreeRRSRobot:
         """
         self.d, self.e, self.f, self.g = d, e, f, g
         self.h_min, self.h_max = h_min, h_max
-        self.roll_max, self.pitch_max = roll_max, pitch_max
+        self.roll_max, self.pitch_max = np.deg2rad(roll_max_deg), np.deg2rad(pitch_max_deg)
         self.motor_limits = motor_limits if motor_limits else [(-np.pi/2, np.pi/2)]*3
 
         # Base joint positions (equilateral triangle in XY plane)
