@@ -1,5 +1,5 @@
 from PID_platform import PID, PIDGains, PlatformPID
-from UpdatedBallTrackingWithTuneAndDemo import BallTracker
+from UpdatedBallTrackingLite import BallTrackerLite
 import time
 from MattsIK import ThreeRRSRobot
 import numpy as np
@@ -22,7 +22,7 @@ if __name__ == "__main__":
                           pitch_max_deg=15,
                           motor_limits=[(np.deg2rad(90.0-20.42), np.deg2rad(180))] * 3)
 
-    tracker = BallTracker()
+    tracker = BallTrackerLite()
     tracker.start()
 
     # NEW: make the stepper controller; you can set initial software angles here if needed
