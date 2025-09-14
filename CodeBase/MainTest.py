@@ -32,29 +32,27 @@ if __name__ == "__main__":
     try:
         while True:
             data = tracker.read()
-            tracker.show_image()
+            key = tracker.show_image()   # returns cv2.waitKey result
+
+            if key == ord('q'):          # press 'q' to quit
+                break
+
             if data is None:
                 continue
 
             u, v, t = data["u"], data["v"], data["timestamp"]
             roll_cmd, pitch_cmd = ctrl.update(u, v, t)  # radians
 
-            # IK returns motor angles (radians). We’ll send those straight to motors.
+            # IK returns motor angles (radians)
             motor_angles, passive_angles = robot.inverse_kinematics(
                 h, roll=roll_cmd, pitch=pitch_cmd
             )
 
-            # DEBUG prints (optional)
-            # print("Pitch (deg):", np.rad2deg(pitch_cmd))
-            # print("Roll  (deg):", np.rad2deg(roll_cmd))
-            # print("Motor Angles (deg):", np.rad2deg(motor_angles))
-            # print("Passive Angles (deg):", np.rad2deg(passive_angles))
-
-            # NEW: drive steppers to those absolute angles (clamped 0–143°)
             motor_ctrl.goto_rad(motor_angles, delay_us=250)
 
-            # small pacing so we don't command faster than the motion can complete
+            # small pacing so we don't overload drivers/UI
             time.sleep(0.02)
+
 
     finally:
         motor_ctrl.close()
