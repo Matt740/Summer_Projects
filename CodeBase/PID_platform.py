@@ -110,8 +110,8 @@ class PlatformPID:
                              i_min=-max_angle, i_max=+max_angle, d_alpha=d_alpha)
 
         # setpoints (target center)
-        self.u_sp = 50.0
-        self.v_sp = 50.0
+        self.u_sp = 0.0
+        self.v_sp = 0.0
 
         self.sign_roll = sign_roll
         self.sign_pitch = sign_pitch
