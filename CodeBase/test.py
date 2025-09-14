@@ -25,7 +25,7 @@ if __name__ == "__main__":
                 print(f"Moving to {target} deg at delay {delay_us} us...")
                 ctrl.goto_deg(target, delay_us=delay_us)
                 print("Current positions:", ctrl.get_pos_deg())
-                time.sleep(1.0)  # pause between moves
+                time.sleep(3.0)  # pause between moves
     except KeyboardInterrupt:
         print("Test stopped by user.")
     finally:

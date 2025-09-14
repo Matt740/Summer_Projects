@@ -15,8 +15,8 @@ HOLD_AFTER_MOVE   = True      # True => keep coils energized after motion
 
 # Mechanical limits (degrees)
 # From your robot init: motor_limits=[(0.0, np.deg2rad(143))] * 3
-MOTOR_MIN_DEG = 0.0
-MOTOR_MAX_DEG = 143.0
+MOTOR_MIN_DEG = 90.0-20.42
+MOTOR_MAX_DEG = 180
 
 class _StepperHW:
     """Low-level single-motor driver lines."""

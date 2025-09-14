@@ -1,5 +1,5 @@
 from PID_platform import PID, PIDGains, PlatformPID
-from UpdatedBallTrackingLite import BallTrackerLite
+from UpdatedBallTrackingWithTuneAndDemo import BallTracker
 import time
 from MattsIK import ThreeRRSRobot
 import numpy as np
@@ -8,8 +8,8 @@ import numpy as np
 from stepper_controller import MultiStepperController
 
 if __name__ == "__main__":
-    roll_gains  = PIDGains(kp=3.0, ki=0.0, kd=0.0)
-    pitch_gains = PIDGains(kp=3.0, ki=0.0, kd=0.0)
+    roll_gains  = PIDGains(kp=1.0, ki=0.0, kd=0.0)
+    pitch_gains = PIDGains(kp=1.0, ki=0.0, kd=0.0)
 
     ctrl = PlatformPID(roll_gains, pitch_gains, max_angle_deg=10.0,
                        sign_roll=-1.0, sign_pitch=-1.0)
@@ -20,18 +20,19 @@ if __name__ == "__main__":
                           h_min=100, h_max=400,
                           roll_max_deg=15,
                           pitch_max_deg=15,
-                          motor_limits=[(0.0, np.deg2rad(143))] * 3)
+                          motor_limits=[(np.deg2rad(90.0-20.42), np.deg2rad(180))] * 3)
 
-    tracker = BallTrackerLite()
+    tracker = BallTracker()
     tracker.start()
 
     # NEW: make the stepper controller; you can set initial software angles here if needed
     motor_ctrl = MultiStepperController()
-    motor_ctrl.set_pos_deg([0.0, 0.0, 0.0])   # align software to your physical zero
+    motor_ctrl.set_pos_deg([90.0-20.42, 90.0-20.42, 90.0-20.42])   # align software to your physical zero
 
     try:
         while True:
             data = tracker.read()
+            tracker.show_image()
             if data is None:
                 continue
 

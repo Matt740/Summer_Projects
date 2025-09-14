@@ -5,7 +5,7 @@ class ThreeRRSRobot:
                  h_min=100, h_max=400,
                  roll_max_deg=20,
                  pitch_max_deg=20,
-                 motor_limits = [(0.0, np.deg2rad(143))] * 3):
+                 motor_limits = [(np.deg2rad(90.0-20.42), np.deg2rad(180))] * 3):
         """
         d : float
             Distance from base center to base corners
