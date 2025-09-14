@@ -110,27 +110,27 @@ class ThreeRRSRobot:
 
 
 # ================= Example Usage =================
-if __name__ == "__main__":
-    # Example robot geometry
-    d, e, f, g = 116, 116, 50, 219
-    robot = ThreeRRSRobot(d, e, f, g,
-                          h_min=100, h_max=400,
-                          roll_max=np.deg2rad(15),
-                          pitch_max=np.deg2rad(15),
-                          motor_limits = [(0.0, np.deg2rad(143))] * 3)
+# if __name__ == "__main__":
+#     # Example robot geometry
+#     d, e, f, g = 116, 116, 50, 219
+#     robot = ThreeRRSRobot(d, e, f, g,
+#                           h_min=100, h_max=400,
+#                           roll_max=np.deg2rad(15),
+#                           pitch_max=np.deg2rad(15),
+#                           motor_limits = [(0.0, np.deg2rad(143))] * 3)
 
-    try:
-        h = 225
-        roll = np.deg2rad(0)
-        pitch = np.deg2rad(0)
+#     try:
+#         h = 225
+#         roll = np.deg2rad(0)
+#         pitch = np.deg2rad(0)
 
-        # Get both active and passive angles
-        motor_angles, passive_angles = robot.inverse_kinematics(h, roll, pitch)
+#         # Get both active and passive angles
+#         motor_angles, passive_angles = robot.inverse_kinematics(h, roll, pitch)
 
-        print("Motor Angles (rad):", motor_angles)
-        print("Motor Angles (deg):", np.rad2deg(motor_angles))
-        print("Passive Angles (rad):", passive_angles)
-        print("Passive Angles (deg):", np.rad2deg(passive_angles))
+#         print("Motor Angles (rad):", motor_angles)
+#         print("Motor Angles (deg):", np.rad2deg(motor_angles))
+#         print("Passive Angles (rad):", passive_angles)
+#         print("Passive Angles (deg):", np.rad2deg(passive_angles))
 
-    except ValueError as e:
-        print("SAFETY ERROR:", e)
+#     except ValueError as e:
+#         print("SAFETY ERROR:", e)
