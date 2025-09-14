@@ -32,10 +32,10 @@ if __name__ == "__main__":
     try:
         while True:
             data = tracker.read()
-            key = tracker.show_image()   # returns cv2.waitKey result
+            # key = tracker.show_image()   # returns cv2.waitKey result
 
-            if key == ord('q'):          # press 'q' to quit
-                break
+            # if key == ord('q'):          # press 'q' to quit
+            #     break
 
             if data is None:
                 continue
