@@ -96,7 +96,11 @@ class ThreeRRSRobot:
             # Motor angle limit check
             min_angle, max_angle = self.motor_limits[i]
             if not (min_angle <= theta <= max_angle):
-                raise ValueError(f"Motor {i+1} angle {theta:.2f} rad out of range [{min_angle}, {max_angle}]")
+                if (theta < min_angle):
+                    theta = min_angle
+                elif (theta > max_angle):
+                    theta = max_angle
+                # raise ValueError(f"Motor {i+1} angle {theta:.2f} rad out of range [{min_angle}, {max_angle}]")
 
             active_thetas.append(theta)
 

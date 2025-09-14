@@ -94,7 +94,7 @@ class PlatformPID:
     def __init__(self,
                  gains_roll: PIDGains,
                  gains_pitch: PIDGains,
-                 max_angle_deg: float = 10.0, # Internally use radians, externally degrees
+                 max_angle_deg: float = 5.0, # Internally use radians, externally degrees
                  sign_roll: float = -1.0,   # flip to match your platform
                  sign_pitch: float = -1.0,  # flip to match your platform
                  d_alpha: float = 0.2):
@@ -163,13 +163,13 @@ class PlatformPID:
 
 
 # ---------- Example wiring with your BallTrackerLite ----------
-if __name__ == "__main__":
-    # Example gains (start small; tune on hardware)
-    roll_gains  = PIDGains(kp=6.0, ki=0.0, kd=0.8)
-    pitch_gains = PIDGains(kp=6.0, ki=0.0, kd=0.8)
+# if __name__ == "__main__":
+#     # Example gains (start small; tune on hardware)
+#     roll_gains  = PIDGains(kp=6.0, ki=0.0, kd=0.8)
+#     pitch_gains = PIDGains(kp=6.0, ki=0.0, kd=0.8)
 
-    ctrl = PlatformPID(roll_gains, pitch_gains, max_angle_deg=10.0,
-                       sign_roll=-1.0, sign_pitch=-1.0)
+#     ctrl = PlatformPID(roll_gains, pitch_gains, max_angle_deg=5.0,
+#                        sign_roll=-1.0, sign_pitch=-1.0)
 
     # Suppose you have: from tracker import BallTrackerLite
     # tracker = BallTrackerLite(); tracker.start()
