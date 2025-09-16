@@ -7,8 +7,8 @@ class BallTracker:
     def __init__(
         self,
         resolution=(640, 480),
-        show_tuner=True,
-        hsv_init=(10, 35, 0, 255, 160, 255),  # (Hlow, Hhigh, Slow, Shigh, Vlow, Vhigh)
+        show_tuner=False,
+        hsv_init=(9, 38, 59, 255, 160, 255),  # (Hlow, Hhigh, Slow, Shigh, Vlow, Vhigh)
         hough_dp=1.2,
         hough_minDist=50,
         hough_param1=100,
@@ -142,6 +142,24 @@ class BallTracker:
             return result, frame_bgr, mask
         else:
             return result
+    def show_image(self):
+        if not self._started:
+            self.start()
+
+        res, frame_bgr, mask = self.read(return_images=True)
+
+        if res is not None:
+            x, y, r = res["x"], res["y"], res["r"]
+            cv2.putText(frame_bgr, f"x={x} y={y} r={r}", (10, 25),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
+
+        cv2.imshow("Ball Tracking", frame_bgr)
+        if self.show_tuner:
+            cv2.imshow("Mask", mask)
+
+        # ensure GUI refresh, return key
+        return cv2.waitKey(1) & 0xFF
+
 
     def run_demo(self):
         """Optional: live view with 'q' to quit."""
@@ -166,6 +184,7 @@ class BallTracker:
 if __name__ == "__main__":
     tracker = BallTracker(show_tuner=True)
     tracker.start()
+    #tracker.run_demo()
     try:
         while True:
             res = tracker.read()  # <-- returns dict or None
